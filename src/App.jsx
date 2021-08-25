@@ -9,6 +9,7 @@ import Recipes from "./Pages/Recipes/Recipes";
 import * as themeChanger from './themeChanger';
 import useThemeChanger from "./themeChanger";
 import {useState} from "react";
+import Product from "./Pages/Product/Product";
 
 interface Props {
     window?: () => Window;
@@ -74,6 +75,7 @@ const App = (props) => {
                 <div className={classes.toolbar} />
                     <Switch>
                         <Route path='/products' component={ProductsList} />
+                        <Route path='/product/:productId' component={Product} />
                         <Route path='/dishes' component={Dishes} />
                         <Route path='/recipes' component={Recipes} />
                     </Switch>

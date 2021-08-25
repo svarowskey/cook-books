@@ -2,8 +2,8 @@ import style from './ProductListItem.module.scss';
 
 const ProductListItem = (props) => {
     return (
-        <div key={props.data.id}>
-            <span>{props.data.name}</span>
+        <div>
+            <a href={`/product/${props.data.id}`}>{props.data.name}</a>
         </div>
     )
 }

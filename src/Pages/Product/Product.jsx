@@ -1,9 +1,9 @@
 import style from './Product.module.scss';
 
-const Product = () => {
+const Product = ({match}) => {
     return (
         <div>
-            product profile
+            <button onClick={() => {console.log(match)}}>Click</button>
         </div>
     )
 }
