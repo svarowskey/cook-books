@@ -1,4 +1,5 @@
 import { db } from './firebase';
+import firebase from "firebase";
 
 export function getProducts() {
     return db.collection('products')
@@ -16,6 +17,16 @@ export function getProducts() {
         .catch(error => {
             console.log('Error getting products: ', error);
         });
+}
+
+export function getProductById(productId) {
+    return db.collection('products')
+        .doc(productId)
+        .get()
+        .then((docref) => {
+            return docref.data();
+        })
+        .catch(error => console.log('Error getting a product: ', error));
 }
 
 export function getDishes() {
