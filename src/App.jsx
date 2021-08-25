@@ -1,25 +1,35 @@
-import logo from './logo.svg';
+import {useEffect, useState} from "react";
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const App = (props) => {
+    const [themeState, setTheme] = useState('light');
+
+    if (!localStorage?.getItem('Theme')) {
+        localStorage.setItem('Theme', 'light');
+        setTheme('light');
+    }
+
+    let currentTheme = localStorage?.getItem('Theme');
+
+    useEffect(() => {
+        setTheme(currentTheme);
+    }, [currentTheme]);
+
+    const handleClick = () => {
+        if (themeState === 'light') {
+            setTheme('dark');
+            localStorage.setItem('Theme', 'dark');
+        } else {
+            setTheme('light');
+            localStorage.setItem('Theme', 'light');
+        }
+    }
+
+    return (
+        <div className="App">
+
+        </div>
+    );
 }
 
 export default App;
