@@ -6,6 +6,7 @@ import Menu from "./components/Menu/Menu";
 import {Route, Switch} from "react-router";
 import Products from "./components/Pages/Products/Products";
 import Dishes from "./components/Pages/Dishes/Dishes";
+import Recipes from "./components/Pages/Recipes/Recipes";
 
 const drawerWidth = 240;
 
@@ -134,6 +135,7 @@ const App = (props) => {
                     <Switch>
                         <Route path='/products' component={Products} />
                         <Route path='/dishes' component={Dishes} />
+                        <Route path='/recipes' component={Recipes} />
                     </Switch>
             </main>
         </div>

@@ -51,7 +51,7 @@ const Menu = () => {
                         component={NavLink}
                         button
                         key='Рецепты'
-                        to='/recipies'
+                        to='/recipes'
                     >
                         <Icon className={style.menu_list_item_icon}>list</Icon>
                         <ListItemText primary='Рецепты'/>
