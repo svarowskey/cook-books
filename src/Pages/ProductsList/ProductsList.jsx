@@ -1,5 +1,6 @@
 import style from './Products.module.scss';
 import useApi from '../../hooks/api';
+import Product from "./Product/Product";
 
 const Products = () => {
     const {data: {products}, actions} = useApi();
@@ -7,10 +8,7 @@ const Products = () => {
     return (
         <div>
             {products.map(product => {
-                return (<div key={product.id}>
-                        <span>{product.name}</span>
-                    </div>
-                )
+                return <Product data={product} />
             })}
         </div>
     )
