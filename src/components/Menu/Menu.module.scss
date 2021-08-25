@@ -1,0 +1,29 @@
+.menu_container {
+  height: inherit;
+}
+
+.nav {
+
+}
+
+.menu_group {
+  height: calc(100% - 75px);
+
+  .menu_list {
+    margin-top: 10px;
+
+    .menu_list_item {
+      margin: 4px 0;
+
+      .menu_list_item_icon {
+        margin-right: 4px;
+      }
+    }
+  }
+}
+
+.menu_toolbar {
+  text-align: center;
+  line-height: 64px;
+  font-size: 24px;
+}
