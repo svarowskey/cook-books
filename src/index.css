@@ -5,6 +5,15 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+}
+
+#root {
+  height: 100%;
+}
+
+.makeStyles-root-1 {
+  height: 100%;
 }
 
 code {
