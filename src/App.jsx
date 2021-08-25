@@ -5,6 +5,7 @@ import { makeStyles, useTheme, Theme, createStyles } from '@material-ui/core/sty
 import Menu from "./components/Menu/Menu";
 import {Route, Switch} from "react-router";
 import Products from "./components/Pages/Products/Products";
+import Dishes from "./components/Pages/Dishes/Dishes";
 
 const drawerWidth = 240;
 
@@ -132,6 +133,7 @@ const App = (props) => {
                 <div className={classes.toolbar} />
                     <Switch>
                         <Route path='/products' component={Products} />
+                        <Route path='/dishes' component={Dishes} />
                     </Switch>
             </main>
         </div>
