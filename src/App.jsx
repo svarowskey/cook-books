@@ -3,7 +3,7 @@ import {AppBar, CssBaseline, Drawer, Hidden, Icon, IconButton, Toolbar} from '@m
 import { useTheme} from '@material-ui/core/styles';
 import Menu from "./components/Menu/Menu";
 import {Route, Switch} from "react-router";
-import Products from "./Pages/Products/Products";
+import ProductsList from "./Pages/ProductsList/ProductsList";
 import Dishes from "./Pages/Dishes/Dishes";
 import Recipes from "./Pages/Recipes/Recipes";
 import * as themeChanger from './themeChanger';
@@ -73,7 +73,7 @@ const App = (props) => {
             <main className={classes.content}>
                 <div className={classes.toolbar} />
                     <Switch>
-                        <Route path='/products' component={Products} />
+                        <Route path='/products' component={ProductsList} />
                         <Route path='/dishes' component={Dishes} />
                         <Route path='/recipes' component={Recipes} />
                     </Switch>

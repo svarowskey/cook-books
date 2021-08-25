@@ -1,17 +1,17 @@
-import style from './Products.module.scss';
+import style from './ProductsList.module.scss';
 import useApi from '../../hooks/api';
-import Product from "./Product/Product";
+import ProductListItem from "./ProductListItem/ProductListItem";
 
-const Products = () => {
+const ProductsList = () => {
     const {data: {products}, actions} = useApi();
 
     return (
         <div>
             {products.map(product => {
-                return <Product data={product} />
+                return <ProductListItem data={product} />
             })}
         </div>
     )
 }
 
-export default Products;
+export default ProductsList;
