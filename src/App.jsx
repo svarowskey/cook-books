@@ -4,9 +4,9 @@ import {AppBar, CssBaseline, Drawer, Hidden, Icon, IconButton, Toolbar} from '@m
 import { makeStyles, useTheme, Theme, createStyles } from '@material-ui/core/styles';
 import Menu from "./components/Menu/Menu";
 import {Route, Switch} from "react-router";
-import Products from "./components/Pages/Products/Products";
-import Dishes from "./components/Pages/Dishes/Dishes";
-import Recipes from "./components/Pages/Recipes/Recipes";
+import Products from "./Pages/Products/Products";
+import Dishes from "./Pages/Dishes/Dishes";
+import Recipes from "./Pages/Recipes/Recipes";
 
 const drawerWidth = 240;
 

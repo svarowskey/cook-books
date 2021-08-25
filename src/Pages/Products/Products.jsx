@@ -1,6 +1,5 @@
 import style from './Products.module.scss';
-import useApi from '../../../hooks/api';
-import {useEffect} from "react";
+import useApi from '../../hooks/api';
 
 const Products = () => {
     const {data: {products}, actions} = useApi();
