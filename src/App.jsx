@@ -3,6 +3,8 @@ import style from './App.module.scss';
 import {AppBar, CssBaseline, Drawer, Hidden, Icon, IconButton, Toolbar} from '@material-ui/core';
 import { makeStyles, useTheme, Theme, createStyles } from '@material-ui/core/styles';
 import Menu from "./components/Menu/Menu";
+import {Route, Switch} from "react-router";
+import Products from "./components/Pages/Products/Products";
 
 const drawerWidth = 240;
 
@@ -128,14 +130,9 @@ const App = (props) => {
             </nav>
             <main className={classes.content}>
                 <div className={classes.toolbar} />
-                Content
-                {/*<AppContent>*/}
-                {/*    <Switch>*/}
-                {/*        <Route path="/todos/:listId" component={TodoList}/>*/}
-                {/*        <Route path="/:listId" component={TodoList}/>*/}
-                {/*        <Redirect from="*" to="/" />*/}
-                {/*    </Switch>*/}
-                {/*</AppContent>*/}
+                    <Switch>
+                        <Route path='/products' component={Products} />
+                    </Switch>
             </main>
         </div>
     );
