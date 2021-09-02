@@ -12,10 +12,6 @@ import {useState} from "react";
 import Product from "./Pages/Product/Product";
 import Dish from "./Pages/Dish/Dish";
 
-interface Props {
-    window?: () => Window;
-}
-
 const App = (props) => {
     const { window } = props;
     const classes = themeChanger.useStyles();

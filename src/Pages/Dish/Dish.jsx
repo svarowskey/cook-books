@@ -2,38 +2,23 @@ import style from './Dish.module.scss';
 import useApi from "../../hooks/api";
 import {useEffect, useState} from "react";
 import Product from "../Product/Product";
-import {List} from "@material-ui/core";
+import {List, ListItem} from "@material-ui/core";
+import {db} from "../../firebase";
+import {useDocData} from "../../hooks/firestoreHooks";
 
 const Dish = ({match}) => {
     const {data: {dish, product, dishProducts}, actions} = useApi();
     const [products, setProducts] = useState();
-
-    useEffect(() => {
-        actions.getDishById(match.params.dishId);
-    }, []);
-
-    function getPr(prod) {
-        actions.getProductDishById(prod.id);
-    }
-
-    function getProducts() {
-        let prodsArr = dish.products_list;
-        let prodc = [];
-        prodsArr.map(prod => (
-            // prod.push(prod)
-            getPr(prod)
-        ));
-        // console.log(prodc);
-    }
+    const [test] = useDocData(db.collection('dishes').doc(match.params.dishId), 'products_list');
 
     return (
         <div>
-            <h3>{dish.name}</h3>
+            <h3>{test && test.name}</h3>
             <div>
                 <h4>Используемые продукты</h4>
                 <List>
                     {
-
+                        test && test.products_list.map(t => <ListItem>{ t.name }</ListItem>)
                     }
                 </List>
 
