@@ -5,6 +5,8 @@ export default function useApi() {
     const [products, setProducts] = useState([]);
     const [dishes, setDishes] = useState([]);
     const [product, setProduct] = useState([]);
+    const [dish, setDish] = useState([]);
+    const [dishProducts, setDishProducts] = useState();
 
     useEffect(() => {
         firebase_api.getProducts().then(setProducts);
@@ -21,9 +23,18 @@ export default function useApi() {
             .then(setProduct);
     }
 
+    function getProductDishById(productId) {
+        return firebase_api.getProducstByIds(productId).then(setDishProducts);
+    }
+
     function getDishes() {
         return firebase_api.getDishes()
             .then(setDishes);
+    }
+
+    function getDishById(dishId) {
+        return firebase_api.getDishById(dishId)
+            .then(setDish)
     }
 
     return {
@@ -31,11 +42,15 @@ export default function useApi() {
             products,
             product,
             dishes,
+            dish,
+            dishProducts
         },
         actions: {
             getProducts,
             getProductById,
             getDishes,
+            getDishById,
+            getProductDishById,
         }
     };
 }

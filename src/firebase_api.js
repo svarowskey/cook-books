@@ -26,7 +26,17 @@ export function getProductById(productId) {
         .then((docref) => {
             return docref.data();
         })
-        .catch(error => console.log('Error getting a product: ', error));
+        .catch(error => console.log('Error getting a product by Id: ', error));
+}
+
+export function getProducstByIds(productsIds) {
+    return db.collection('products')
+        .doc(productsIds)
+        .get()
+        .then((docref) => {
+            return docref.data();
+        })
+        .catch(error => console.log('Error getting a product by Id: ', error));
 }
 
 export function getDishes() {
@@ -43,6 +53,18 @@ export function getDishes() {
             return dishes;
         })
         .catch(error => {
-            console.log('Errpr getting dishes: ', error);
+            console.log('Error getting dishes: ', error);
+        })
+}
+
+export function getDishById(dishId) {
+    return db.collection('dishes')
+        .doc(dishId)
+        .get()
+        .then((docref) => {
+            return docref.data();
+        })
+        .catch(error => {
+            console.log('Error getting dish by Id: ', error);
         })
 }

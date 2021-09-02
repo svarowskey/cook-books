@@ -4,12 +4,13 @@ import { useTheme} from '@material-ui/core/styles';
 import Menu from "./components/Menu/Menu";
 import {Route, Switch} from "react-router";
 import ProductsList from "./Pages/ProductsList/ProductsList";
-import Dishes from "./Pages/Dishes/Dishes";
-import Recipes from "./Pages/Recipes/Recipes";
+import DishesList from "./Pages/DishesList/DishesList";
+import RecipesList from "./Pages/RecipesList/RecipesList";
 import * as themeChanger from './themeChanger';
 import useThemeChanger from "./themeChanger";
 import {useState} from "react";
 import Product from "./Pages/Product/Product";
+import Dish from "./Pages/Dish/Dish";
 
 interface Props {
     window?: () => Window;
@@ -76,8 +77,9 @@ const App = (props) => {
                     <Switch>
                         <Route path='/products' component={ProductsList} />
                         <Route path='/product/:productId' component={Product} />
-                        <Route path='/dishes' component={Dishes} />
-                        <Route path='/recipes' component={Recipes} />
+                        <Route path='/dishes' component={DishesList} />
+                        <Route path='/dish/:dishId' component={Dish} />
+                        <Route path='/recipes' component={RecipesList} />
                     </Switch>
             </main>
         </div>

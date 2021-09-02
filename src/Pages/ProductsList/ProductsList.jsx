@@ -1,16 +1,16 @@
 import style from './ProductsList.module.scss';
 import useApi from '../../hooks/api';
-import ProductListItem from "./ProductListItem/ProductListItem";
+import ProductsListItem from "./ProductsListItem/ProductsListItem";
+import {List} from "@material-ui/core";
 
 const ProductsList = () => {
     const {data: {products}, actions} = useApi();
-
     return (
-        <div>
+        <List>
             {products.map(product => {
-                return <ProductListItem data={product} key={product.id} />
+                return <ProductsListItem data={product} key={product.id} />
             })}
-        </div>
+        </List>
     )
 }
 
