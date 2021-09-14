@@ -8,9 +8,15 @@ const Product = ({match}) => {
         actions.getProductById(match.params.productId);
     }, [])
 
+    const productPic = product.urlPic ? <img src={product.urlPic} alt="product`s picture" className={style.product_img}/> : '';
+
     return (
         <div>
-            <span>{product.name}</span>
+            <h3>{product.name}</h3>
+            {productPic}
+            <div className={style.product_description}>
+                {product.description}
+            </div>
         </div>
     )
 }

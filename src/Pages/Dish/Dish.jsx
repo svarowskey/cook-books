@@ -11,14 +11,21 @@ const Dish = ({match}) => {
     const [products, setProducts] = useState();
     const [test] = useDocData(db.collection('dishes').doc(match.params.dishId), 'products_list');
 
+    const dishPic = test && test.urlPic ? <img src={test.urlPic} alt="dishes`s picture" className={style.dish_img}/> : '';
+
     return (
         <div>
             <h3>{test && test.name}</h3>
+            {dishPic}
             <div>
                 <h4>Используемые продукты</h4>
                 <List>
                     {
-                        test && test.products_list.map(t => <ListItem>{ t.name }</ListItem>)
+                        test && test.products_list.map(t =>
+                            <ListItem>
+                                <img src={t.urlPic} alt="products` picture" className={style.products_list__img}/>
+                                <span className={style.products_list__text}>{ t.name }</span>
+                            </ListItem>)
                     }
                 </List>
 
