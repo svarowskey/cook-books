@@ -10,7 +10,6 @@ const Dish = ({match}) => {
     const {data: {dish, product, dishProducts}, actions} = useApi();
     const [products, setProducts] = useState();
     const [test] = useDocData(db.collection('dishes').doc(match.params.dishId), 'products_list');
-
     const dishPic = test && test.urlPic ? <img src={test.urlPic} alt="dishes`s picture" className={style.dish_img}/> : '';
 
     return (
@@ -22,14 +21,12 @@ const Dish = ({match}) => {
                 <List>
                     {
                         test && test.products_list.map(t =>
-                            <ListItem>
+                            <ListItem key={Math.random() * 0.333}>
                                 <img src={t.urlPic} alt="products` picture" className={style.products_list__img}/>
                                 <span className={style.products_list__text}>{ t.name }</span>
                             </ListItem>)
                     }
                 </List>
-
-                {/*<button onClick={getProducts}>GET</button>*/}
             </div>
         </div>
     )
