@@ -3,6 +3,7 @@ import firebase from "firebase";
 
 export function getProducts() {
     return db.collection('products')
+        .orderBy('name')
         .get()
         .then(snapshot => {
             const products = snapshot.docs.map(doc => (
@@ -11,7 +12,6 @@ export function getProducts() {
                     ...doc.data()
                 }
             ));
-
             return products;
         })
         .catch(error => {
@@ -41,6 +41,7 @@ export function getProducstByIds(productsIds) {
 
 export function getDishes() {
     return db.collection('dishes')
+        .orderBy('name')
         .get()
         .then(snapshot => {
             const dishes = snapshot.docs.map(doc => (
