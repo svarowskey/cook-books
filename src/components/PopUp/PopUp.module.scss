@@ -1,0 +1,41 @@
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  background-color: rgba(0, 0, 0, .3);
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.modal_content {
+  min-width: 400px;
+  border: 1px solid lightgray;
+  border-radius: 12px;
+  background-color: white;
+  padding: 30px;
+}
+.close {
+  cursor: pointer;
+  flex-grow: 1;
+  text-align: end;
+}
+.modal_header {
+  display: flex;
+}
+.title {
+  flex-grow: 30;
+  text-align: center;
+}
+.form {
+  display: flex;
+  flex-direction: column;
+}
+.form>div {
+  margin-bottom: 10px;
+}
+.form>div>label {
+  margin-left: 12px;
+}

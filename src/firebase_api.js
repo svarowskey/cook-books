@@ -68,3 +68,14 @@ export function getDishById(dishId) {
             console.log('Error getting dish by Id: ', error);
         })
 }
+
+export function createProduct(data) {
+    return db.collection('products').add({
+        ...data,
+    })
+        .then(docRef => docRef.get())
+        .then(doc => ({
+            id: doc.id,
+                ...doc.data()
+        }));
+}
