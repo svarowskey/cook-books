@@ -118,15 +118,17 @@ const PopUp = (props) => {
                                         }}
                                         renderInput={(params) => <TextField {...params} label="Продукт" required />}
                                     />
-                                    { countInputs === i+1 ? <span className={style.input_del} onClick={() => {
-                                        setCountInputs(countInputs - 1);
-                                        deleteInput();
-                                    }}>&times;</span> : null}
                                 </div>
                             )
                         })}
                     </div>
-                    <Button onClick={() => setCountInputs(countInputs + 1)}>Ещё продукт</Button>
+                    <div className={style.button_wrapper}>
+                        <Button variant='outlined' className={style.button_item} onClick={() => setCountInputs(countInputs + 1)}>Ещё продукт</Button>
+                        { countInputs > 1 ? <Button variant='outlined' color='error' className={style.button_item} onClick={() => {
+                            setCountInputs(countInputs - 1);
+                            deleteInput();
+                        }}>&times;</Button> : null}
+                    </div>
                 </Stack>
         )} else { return null }
     }
