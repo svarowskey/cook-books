@@ -42,6 +42,11 @@ export default function useApi() {
             .then(product => setProducts([...products, product]));
     }
 
+    function createDish(data) {
+        return firebase_api.createDish(data)
+            // .then(product => setProducts([...products, product]));
+    }
+
     return {
         data: {
             products,
@@ -57,6 +62,7 @@ export default function useApi() {
             getDishById,
             getProductDishById,
             createProduct,
+            createDish,
         }
     };
 }

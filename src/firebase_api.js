@@ -80,3 +80,18 @@ export function createProduct(data) {
                 ...doc.data()
         }));
 }
+
+export function createDish(data) {
+    let dishesProds = data.products_list.map((prod) => {
+        return firebase.firestore().doc(prod);
+    })
+    return db.collection('dishes').add({
+        ...data,
+        products_list: dishesProds,
+    })
+        .then(docRef => docRef.get())
+        .then(doc => ({
+            id: doc.id,
+            ...doc.data()
+        }));
+}

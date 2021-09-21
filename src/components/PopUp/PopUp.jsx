@@ -1,38 +1,118 @@
 import style from './PopUp.module.scss';
 import {Button, FormControl, InputLabel, OutlinedInput} from "@material-ui/core";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import useApi from '../../hooks/api';
+import Autocomplete from '@mui/material/Autocomplete';
+import {Stack, TextField} from "@mui/material";
 
 const PopUp = (props) => {
-    const {actions} = useApi();
+    const {data: {products}, actions} = useApi();
+    let data = {};
     const [productName, setProductName] = useState('');
     const [productDesc, setProductDesc] = useState('');
     const [productPic, setProductPic] = useState('');
+    const [dishName, setDishName] = useState('');
+    const [dishDesc, setDishDesc] = useState('');
+    const [dishPic, setDishPic] = useState('');
+    const [dishProducts, setDishProducts] = useState([]);
+    const [countInputs, setCountInputs] = useState(1);
+    const title = props.action === 'add_dish' ? 'блюда' : 'продукта';
 
-    let data = {};
+    // Формируем список продуктов для inputs
+    const productsOptions = () => {
+        let productsOps = [];
+        productsOps = products.map(prod => {
+            return prod.name;
+        })
+        return productsOps;
+    }
 
+    // Функция отправки формы
     const handleSubmit = async (event) => {
         event.preventDefault();
-        data.name = productName;
-        data.description = productDesc;
-        data.urlPic = productPic;
-        setProductName('');
-        setProductDesc('');
-        setProductPic('');
-        await actions.createProduct(data);
+        if (props.action === 'add_dish') {
+            data.name = dishName;
+            data.description = dishDesc;
+            data.urlPic = dishPic;
+            data.recipe_id = '';
+            data.type_dish = '';
+            data.products_list = dishProducts.map((dishProd) => {
+                // Формируем ссылку на продукт в firestore
+                const refProd = '/products/' + products[dishProd.id].id;
+                return refProd;
+            });
+            await actions.createDish(data);
+        }
+        if (props.action === 'add_product') {
+            data.name = productName;
+            data.description = productDesc;
+            data.urlPic = productPic;
+            await actions.createProduct(data);
+        }
         props.handleClick();
     }
 
+    // Функция изменения поля с наименованием
     const changeName = (e) => {
-        setProductName(e.target.value);
+        if (props.action === 'add_dish') {
+            setDishName(e.target.value);
+        }
+        if (props.action === 'add_product') {
+            setProductName(e.target.value);
+        }
     }
 
+    // Функция изменения поля с описанием
     const changeDesc = (e) => {
-        setProductDesc(e.target.value);
+        if (props.action === 'add_dish') {
+            setDishDesc(e.target.value);
+        }
+        if (props.action === 'add_product') {
+            setProductDesc(e.target.value);
+        }
     }
 
+    // Функция изменения поля с URL картинки
     const changePic = (e) => {
-        setProductPic(e.target.value);
+        if (props.action === 'add_dish') {
+            setDishPic(e.target.value);
+        }
+        if (props.action === 'add_product') {
+            setProductPic(e.target.value);
+        }
+    }
+
+    // Функция изменения полей с выбором продуктов
+    const changeDishProducts = (event, i) => {
+        let prevDishProducts = [...dishProducts];
+        let item = {...prevDishProducts[i]};
+        item.id = event.target.dataset.optionIndex;
+        prevDishProducts[i] = item;
+        setDishProducts(prevDishProducts);
+    }
+
+    // Формируем список полей с продуктами
+    const listInputs = () => {
+         if (props.action === 'add_dish') {
+             return (
+                <Stack spacing={1} id='stack_inputs'>
+                    { [...Array(countInputs)].map((e, i) => {
+                        return(
+                            <Autocomplete
+                                key={i}
+                                disablePortal
+                                options={productsOptions()}
+                                id="combo-box-demo"
+                                onChange={(event) => {
+                                    changeDishProducts(event, i);
+                                }}
+                                renderInput={(params) => <TextField {...params} label="Продукт" required />}
+                            />
+                        )
+                    })}
+                    <Button onClick={() => {setCountInputs(countInputs + 1)}}>Ещё продукт</Button>
+                </Stack>
+        )} else { return null }
     }
 
     const render = () => {
@@ -40,7 +120,7 @@ const PopUp = (props) => {
             <div className={style.modal}>
                 <div className={style.modal_content}>
                     <div className={style.modal_header}>
-                        <h2 className={style.title}>Добавление продукта</h2>
+                        <h2 className={style.title}>Добавление {title}</h2>
                         <span className={style.close} onClick={props.handleClick}>&times;</span>
                     </div>
                     <form className={style.form}
@@ -49,9 +129,8 @@ const PopUp = (props) => {
                         <FormControl required>
                             <InputLabel htmlFor='component-outlined'>Наименование</InputLabel>
                             <OutlinedInput
-                                name='product_name'
-                                id='product_name'
-                                value={ productName }
+                                id='field_name'
+                                value={ props.action === 'add_dish' ? dishName : productName }
                                 label='Наименование'
                                 onChange={changeName}
                             />
@@ -59,9 +138,8 @@ const PopUp = (props) => {
                         <FormControl required>
                             <InputLabel htmlFor='component-outlined'>Описание</InputLabel>
                             <OutlinedInput
-                                id='product_desc'
-                                name='product_desc'
-                                value={ productDesc }
+                                id='field_desc'
+                                value={ props.action === 'add_dish' ? dishDesc : productDesc }
                                 label='Описание'
                                 onChange={changeDesc}
                             />
@@ -69,13 +147,15 @@ const PopUp = (props) => {
                         <FormControl required>
                             <InputLabel htmlFor='component-outlined'>URL картинки</InputLabel>
                             <OutlinedInput
-                                id='product_pic'
-                                name='product_pic'
-                                value={ productPic }
+                                id='field_pic'
+                                value={ props.action === 'add_dish' ? dishPic : productPic }
                                 label='URL картинки'
                                 onChange={changePic}
                             />
                         </FormControl>
+
+                        { props.action === 'add_dish' ? listInputs() : null }
+
                         <Button
                             type='submit'
                             variant='contained'

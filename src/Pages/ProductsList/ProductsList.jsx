@@ -22,7 +22,7 @@ const ProductsList = () => {
             {products.map(product => {
                 return <ProductsListItem data={product} key={product.id} />
             })}
-            {popUp ? <PopUp toggle={popUp} handleClick={handleClick} /> : null}
+            {popUp ? <PopUp action={'add_product'} toggle={popUp} handleClick={handleClick} /> : null}
         </List>
     )
 }
