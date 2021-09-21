@@ -91,26 +91,42 @@ const PopUp = (props) => {
         setDishProducts(prevDishProducts);
     }
 
+    const deleteInput = () => {
+        let prevDishProducts = [...dishProducts];
+        prevDishProducts.pop();
+        setDishProducts(prevDishProducts);
+    }
+
     // Формируем список полей с продуктами
     const listInputs = () => {
          if (props.action === 'add_dish') {
              return (
                 <Stack spacing={1} id='stack_inputs'>
-                    { [...Array(countInputs)].map((e, i) => {
-                        return(
-                            <Autocomplete
-                                key={i}
-                                disablePortal
-                                options={productsOptions()}
-                                id="combo-box-demo"
-                                onChange={(event) => {
-                                    changeDishProducts(event, i);
-                                }}
-                                renderInput={(params) => <TextField {...params} label="Продукт" required />}
-                            />
-                        )
-                    })}
-                    <Button onClick={() => {setCountInputs(countInputs + 1)}}>Ещё продукт</Button>
+                    <h3 className={style.title}>Используемые продукты</h3>
+                    <div>
+                        { [...Array(countInputs)].map((e, i) => {
+                            return(
+                                <div className={style.input_wrapper}>
+                                    <Autocomplete
+                                        key={i}
+                                        disablePortal
+                                        sx={{ flexGrow: 10 }}
+                                        options={productsOptions()}
+                                        id="combo-box-demo"
+                                        onChange={(event) => {
+                                            changeDishProducts(event, i);
+                                        }}
+                                        renderInput={(params) => <TextField {...params} label="Продукт" required />}
+                                    />
+                                    { countInputs === i+1 ? <span className={style.input_del} onClick={() => {
+                                        setCountInputs(countInputs - 1);
+                                        deleteInput();
+                                    }}>&times;</span> : null}
+                                </div>
+                            )
+                        })}
+                    </div>
+                    <Button onClick={() => setCountInputs(countInputs + 1)}>Ещё продукт</Button>
                 </Stack>
         )} else { return null }
     }

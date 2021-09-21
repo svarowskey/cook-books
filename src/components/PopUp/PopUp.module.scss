@@ -21,6 +21,7 @@
   cursor: pointer;
   flex-grow: 1;
   text-align: end;
+  font-size: 28px;
 }
 .modal_header {
   display: flex;
@@ -38,4 +39,15 @@
 }
 .form>div>label {
   margin-left: 12px;
+}
+.input_wrapper {
+  display: flex;
+  margin-bottom: 10px;
+}
+.input_del {
+  align-self: center;
+  text-align: center;
+  flex-grow: 1;
+  cursor: pointer;
+  font-size: 28px;
 }
