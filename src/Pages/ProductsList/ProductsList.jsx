@@ -15,15 +15,17 @@ const ProductsList = () => {
     }
 
     return (
-        <List>
+        <div>
             <Button variant='outlined'
                     startIcon={<Icon>add</Icon>}
                     onClick={() => {setPopUp(true)}}>Добавить продукт</Button>
-            {products.map(product => {
-                return <ProductsListItem data={product} key={product.id} />
-            })}
-            {popUp ? <PopUp action={'add_product'} toggle={popUp} handleClick={handleClick} /> : null}
-        </List>
+            <List>
+                {products.map(product => {
+                    return <ProductsListItem data={product} key={product.id} />
+                })}
+                {popUp ? <PopUp action={'add_product'} toggle={popUp} handleClick={handleClick} /> : null}
+            </List>
+        </div>
     )
 }
 
