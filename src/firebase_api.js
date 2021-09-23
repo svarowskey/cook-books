@@ -83,7 +83,7 @@ export function createProduct(data) {
 
 export function createDish(data) {
     let dishesProds = data.products_list.map((prod) => {
-        return firebase.firestore().doc(prod);
+        return firebase.firestore().doc('/products/' + prod.id);
     })
     return db.collection('dishes').add({
         ...data,
@@ -94,4 +94,14 @@ export function createDish(data) {
             id: doc.id,
             ...doc.data()
         }));
+}
+
+/**
+ * Функция загрузки файла в Firebase Storage
+ * @param file
+ * @returns {Promise<String>} File's URL
+ */
+export function uploadFile(file) {
+    return firebase.storage().ref().child('images/' + file.name).put(file)
+        .then((snapshot) => snapshot.ref.getDownloadURL());
 }

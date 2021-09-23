@@ -4,6 +4,7 @@ import {useState} from "react";
 import useApi from '../../hooks/api';
 import Autocomplete from '@mui/material/Autocomplete';
 import {Stack, TextField} from "@mui/material";
+import {uploadFile} from "../../firebase_api";
 
 const PopUp = (props) => {
     const {data: {products}, actions} = useApi();
@@ -20,33 +21,28 @@ const PopUp = (props) => {
 
     // Формируем список продуктов для inputs
     const productsOptions = () => {
-        let productsOps = [];
-        productsOps = products.map(prod => {
-            return prod.name;
-        })
-        return productsOps;
+        return products.map(({name, id}) => ({label: name, id}));
     }
 
     // Функция отправки формы
     const handleSubmit = async (event) => {
         event.preventDefault();
+
         if (props.action === 'add_dish') {
             data.name = dishName;
             data.description = dishDesc;
-            data.urlPic = dishPic;
             data.recipe_id = '';
             data.type_dish = '';
-            data.products_list = dishProducts.map((dishProd) => {
-                // Формируем ссылку на продукт в firestore
-                const refProd = '/products/' + products[dishProd.id].id;
-                return refProd;
-            });
+            data.products_list = dishProducts;
+            const imageUrl = await uploadFile(dishPic); //TODO Перенести в отдельный файл
+            data.urlPic = imageUrl;
             await actions.createDish(data);
         }
         if (props.action === 'add_product') {
             data.name = productName;
             data.description = productDesc;
-            data.urlPic = productPic;
+            const imageUrl = await uploadFile(productPic); //TODO Перенести в отдельный файл
+            data.urlPic = imageUrl;
             await actions.createProduct(data);
         }
         props.handleClick();
@@ -75,18 +71,18 @@ const PopUp = (props) => {
     // Функция изменения поля с URL картинки
     const changePic = (e) => {
         if (props.action === 'add_dish') {
-            setDishPic(e.target.value);
+            setDishPic(e.target.files[0]);
         }
         if (props.action === 'add_product') {
-            setProductPic(e.target.value);
+            setProductPic(e.target.files[0]);
         }
     }
 
     // Функция изменения полей с выбором продуктов
-    const changeDishProducts = (event, i) => {
+    const changeDishProducts = (event, i, value) => {
         let prevDishProducts = [...dishProducts];
         let item = {...prevDishProducts[i]};
-        item.id = event.target.dataset.optionIndex;
+        item.id = value.id;
         prevDishProducts[i] = item;
         setDishProducts(prevDishProducts);
     }
@@ -108,13 +104,13 @@ const PopUp = (props) => {
                             return(
                                 <div className={style.input_wrapper}>
                                     <Autocomplete
-                                        key={i}
+                                        // key={i}
                                         disablePortal
                                         sx={{ flexGrow: 10 }}
                                         options={productsOptions()}
                                         id="combo-box-demo"
-                                        onChange={(event) => {
-                                            changeDishProducts(event, i);
+                                        onChange={(event, value) => {
+                                            changeDishProducts(event, i, value);
                                         }}
                                         renderInput={(params) => <TextField {...params} label="Продукт" required />}
                                     />
@@ -162,14 +158,18 @@ const PopUp = (props) => {
                                 onChange={changeDesc}
                             />
                         </FormControl>
-                        <FormControl required>
-                            <InputLabel htmlFor='component-outlined'>URL картинки</InputLabel>
-                            <OutlinedInput
-                                id='field_pic'
-                                value={ props.action === 'add_dish' ? dishPic : productPic }
-                                label='URL картинки'
-                                onChange={changePic}
-                            />
+                        {/*<FormControl required>*/}
+                        {/*    <InputLabel htmlFor='component-outlined'>URL картинки</InputLabel>*/}
+                        {/*    <OutlinedInput*/}
+                        {/*        id='field_pic'*/}
+                        {/*        value={ props.action === 'add_dish' ? dishPic : productPic }*/}
+                        {/*        label='URL картинки'*/}
+                        {/*        onChange={changePic}*/}
+                        {/*    />*/}
+                        {/*</FormControl>*/}
+
+                        <FormControl>
+                            <input required accept="image/*" id="contained-button-file" type="file" onChange={changePic} />
                         </FormControl>
 
                         { props.action === 'add_dish' ? listInputs() : null }
